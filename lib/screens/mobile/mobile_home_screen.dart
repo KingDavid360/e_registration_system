@@ -1,10 +1,15 @@
 import 'package:csc_picker/csc_picker.dart';
-import 'package:e_registration_system/constants/custom_course_value.dart';
-import 'package:e_registration_system/constants/custom_date_field.dart';
-import 'package:e_registration_system/constants/custom_text_field.dart';
-import 'package:e_registration_system/constants/drop_down.dart';
+import 'package:e_registration_system/components/custom_course_value.dart';
+import 'package:e_registration_system/components/custom_date_field.dart';
+import 'package:e_registration_system/components/custom_text_field.dart';
+import 'package:e_registration_system/components/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../../components/custom_course_value.dart';
+import '../../components/custom_date_field.dart';
+import '../../components/custom_text_field.dart';
+import '../../components/drop_down.dart';
 
 List<String> genderList = ["----------", "Male", "Female"];
 
@@ -17,27 +22,16 @@ class MobileHomeScreen extends StatefulWidget {
 
 class _MobileHomeScreenState extends State<MobileHomeScreen> {
   TextEditingController staffIdController = TextEditingController();
-
   TextEditingController NINController = TextEditingController();
-
   TextEditingController firstNameController = TextEditingController();
-
   TextEditingController otherNamesController = TextEditingController();
-
   TextEditingController lastNameController = TextEditingController();
-
   TextEditingController institutionController = TextEditingController();
-
   TextEditingController typeOfInstitutionController = TextEditingController();
-
   TextEditingController addressController = TextEditingController();
-
   TextEditingController gradeLevelController = TextEditingController();
-
   TextEditingController emailController = TextEditingController();
-
   TextEditingController phoneNumberController = TextEditingController();
-
   TextEditingController dateController = TextEditingController();
 
   String genderValue = genderList.first;
