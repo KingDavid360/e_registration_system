@@ -1,25 +1,46 @@
+import 'package:csc_picker/csc_picker.dart';
+import 'package:e_registration_system/constants/custom_course_value.dart';
+import 'package:e_registration_system/constants/custom_date_field.dart';
 import 'package:e_registration_system/constants/custom_text_field.dart';
 import 'package:e_registration_system/constants/drop_down.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-List<String> list = ["----------", "Male", "Female"];
+List<String> genderList = ["----------", "Male", "Female"];
 
-class MobileHomeScreen extends StatelessWidget {
+class MobileHomeScreen extends StatefulWidget {
   MobileHomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<MobileHomeScreen> createState() => _MobileHomeScreenState();
+}
+
+class _MobileHomeScreenState extends State<MobileHomeScreen> {
   TextEditingController staffIdController = TextEditingController();
+
   TextEditingController NINController = TextEditingController();
+
   TextEditingController firstNameController = TextEditingController();
+
   TextEditingController otherNamesController = TextEditingController();
+
   TextEditingController lastNameController = TextEditingController();
+
   TextEditingController institutionController = TextEditingController();
+
   TextEditingController typeOfInstitutionController = TextEditingController();
+
   TextEditingController addressController = TextEditingController();
+
   TextEditingController gradeLevelController = TextEditingController();
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController phoneNumberController = TextEditingController();
 
-  String dropDownValue = list.first;
+  TextEditingController dateController = TextEditingController();
+
+  String genderValue = genderList.first;
 
   final formKey = GlobalKey<FormState>();
 
@@ -29,7 +50,7 @@ class MobileHomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
         child: ListView(
           children: [
             Image.asset(
@@ -66,9 +87,17 @@ class MobileHomeScreen extends StatelessWidget {
                       SizedBox(height: size.height * 0.02),
                       CustomDropDown(
                         type: "Gender:",
-                        list: list,
-                        value: dropDownValue,
+                        list: genderList,
+                        value: genderValue,
                       ),
+                      SizedBox(height: size.height * 0.02),
+                      CustomDateField(
+                          hint: "Birthday",
+                          icon: const Icon(
+                            Icons.calendar_today_outlined,
+                            color: Colors.grey,
+                          ),
+                          textEditingController: dateController),
                       SizedBox(height: size.height * 0.02),
                       CustomTextFormField(
                           hint: "Institution",
@@ -77,6 +106,14 @@ class MobileHomeScreen extends StatelessWidget {
                       CustomTextFormField(
                           hint: "Type of institution",
                           textEditingController: typeOfInstitutionController),
+                      SizedBox(height: size.height * 0.02),
+                      CSCPicker(
+                        layout: Layout.vertical,
+                        defaultCountry: CscCountry.Nigeria,
+                        onCountryChanged: (country) {},
+                        onStateChanged: (state) {},
+                        onCityChanged: (city) {},
+                      ),
                       SizedBox(height: size.height * 0.02),
                       CustomTextFormField(
                           hint: "Address",
@@ -93,6 +130,8 @@ class MobileHomeScreen extends StatelessWidget {
                       CustomTextFormField(
                           hint: "Phone number",
                           textEditingController: phoneNumberController),
+                      SizedBox(height: size.height * 0.02),
+                      CustomCourseField(),
                     ],
                   )),
             )
