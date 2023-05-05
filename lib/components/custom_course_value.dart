@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomCourseField extends StatelessWidget {
-  CustomCourseField({Key? key}) : super(key: key);
-  String course = "Flutter programming";
+  final String course;
+  CustomCourseField({Key? key, required this.course}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
