@@ -26,21 +26,21 @@ class _CustomDropDownState extends State<CustomDropDown> {
           ),
           SizedBox(height: 10),
           DropdownButtonFormField<String>(
-            // value: widget.value,
             onChanged: (value) {
               if (value != null) {
                 setState(() {
                   widget.selectedValue = value;
+                  print(widget.selectedValue);
                 });
               }
             },
             items: const [
               DropdownMenuItem(
-                value: 'Option 1',
+                value: 'male',
                 child: Text('Male'),
               ),
               DropdownMenuItem(
-                value: 'Option 2',
+                value: 'female',
                 child: Text('Female'),
               ),
             ],
@@ -50,7 +50,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
             ),
             validator: (value) {
               if (value == null) {
-                return 'Please select an option';
+                return 'Please select a valid gender';
               }
               return null;
             },

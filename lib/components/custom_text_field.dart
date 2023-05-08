@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final String hint;
-  final TextEditingController textEditingController;
+  final String? hint;
+  final TextEditingController? textEditingController;
   final TextInputType? keyboardTpe;
   final String? validatorText;
   const CustomTextFormField(
       {Key? key,
-      required this.hint,
+      this.hint,
       this.keyboardTpe,
-      required this.textEditingController,
+      this.textEditingController,
       this.validatorText})
       : super(key: key);
 
@@ -30,7 +30,7 @@ class CustomTextFormField extends StatelessWidget {
           keyboardType: keyboardTpe,
           controller: textEditingController,
           validator: (validator) => validator == null || validator.isEmpty
-              ? 'Enter a valid${validatorText}'
+              ? 'Enter a valid ${validatorText}'
               : null,
           decoration: InputDecoration(
             hintText: hint,

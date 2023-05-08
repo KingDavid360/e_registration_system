@@ -3,8 +3,6 @@ import 'package:e_registration_system/components/custom_button.dart';
 import 'package:e_registration_system/components/custom_course_value.dart';
 import 'package:e_registration_system/components/custom_date_field.dart';
 import 'package:e_registration_system/components/custom_text_field.dart';
-import 'package:e_registration_system/components/drop_down.dart';
-import 'package:e_registration_system/screens/mobile/confirmation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -30,6 +28,8 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController dateController = TextEditingController();
 
+  late String selectedGender;
+
   late String selectedCountry;
   late String selectedState;
   late String selectedCity;
@@ -40,6 +40,8 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
   bool cityState = false;
 
   String course = " Flutter";
+
+  bool validatorState = true;
 
   final formKey = GlobalKey<FormState>();
 
@@ -90,7 +92,54 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                           validatorText: "Other names",
                           textEditingController: otherNamesController),
                       SizedBox(height: size.height * 0.02),
-                      CustomDropDown(selectedValue: genderValue),
+                      // CustomDropDown(selectedValue: genderValue),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "*required",
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.grey),
+                            ),
+                            SizedBox(height: 10),
+                            DropdownButtonFormField<String>(
+                              onChanged: (value) {
+                                if (value != null) {
+                                  setState(() {
+                                    selectedGender = value;
+                                    print(selectedGender);
+                                  });
+                                }
+                              },
+                              items: const [
+                                DropdownMenuItem(
+                                  value: 'male',
+                                  child: Text('Male'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'female',
+                                  child: Text('Female'),
+                                ),
+                              ],
+                              decoration: const InputDecoration(
+                                labelText: 'Select your gender',
+                                border: OutlineInputBorder(),
+                              ),
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please select a valid gender';
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                       SizedBox(height: size.height * 0.02),
                       CustomDateField(
                           hint: "Birthday",
@@ -142,7 +191,16 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                           }
                         },
                       ),
-                      SizedBox(height: size.height * 0.02),
+                      Text(
+                        validatorState == true
+                            ? ""
+                            : "Enter a valid country, state and city",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.red),
+                      ),
+                      SizedBox(height: size.height * 0.0175),
                       CustomTextFormField(
                           hint: "Address",
                           validatorText: "Address",
@@ -164,17 +222,54 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                           textEditingController: phoneNumberController),
                       SizedBox(height: size.height * 0.02),
                       CustomCourseField(course: course),
-                      SizedBox(height: size.height * 0.04),
+                      SizedBox(height: size.height * 0.03),
+                      Text(
+                        validatorState == true
+                            ? ""
+                            : "Could you please fill every field correctly",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: validatorState == true
+                                ? Colors.white
+                                : Colors.red),
+                      ),
                       InkWell(
                           onTap: () {
+                            print(validatorState);
                             if ((formKey.currentState!.validate()) &&
                                 (selectedCountry.isNotEmpty &&
                                     selectedState.isNotEmpty &&
                                     selectedCity.isNotEmpty &&
-                                    genderValue.isNotEmpty) &&
-                                (genderValue.isNotEmpty)) {
-                              setState(() {});
-                              Get.to(ConfirmationScreen());
+                                    selectedGender.isNotEmpty)) {
+                              Get.toNamed(
+                                '/confirmation',
+                                arguments: [
+                                  {"staffId": staffIdController.text},
+                                  {"NIN": NINController.text},
+                                  {"firstName": firstNameController.text},
+                                  {"lastName": lastNameController.text},
+                                  {"otherName": otherNamesController.text},
+                                  {"gender": selectedGender},
+                                  {"date": dateController.text},
+                                  {"country": selectedCountry},
+                                  {"state": selectedState},
+                                  {"city": selectedCity},
+                                  {"address": addressController.text},
+                                  {"gradeLevel": gradeLevelController.text},
+                                  {"phoneNumber": phoneNumberController.text},
+                                  {"course": course},
+                                ],
+                              );
+                            } else {
+                              setState(() {
+                                validatorState = false;
+                                print(validatorState);
+                                print(selectedCountry);
+                                print(selectedState);
+                                print(selectedCity);
+                                print(selectedGender);
+                              });
                             }
                           },
                           child: CustomButton(text: "Next"))

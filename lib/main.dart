@@ -1,4 +1,5 @@
 import 'package:e_registration_system/screens/home.dart';
+import 'package:e_registration_system/screens/mobile/confirmation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +14,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        debugShowCheckedModeBanner: false, home: HomeScreen());
+      debugShowCheckedModeBanner: false,
+      // home: HomeScreen(),
+      // routes: {
+      //   '/confirmation': (context) => ConfirmationScreen(),
+      // },
+      initialRoute: '/',
+      getPages: [
+        GetPage(
+          name: '/',
+          // page: () => ConfirmationScreen(),
+          page: () => HomeScreen(),
+        ),
+        GetPage(
+          name: '/confirmation',
+          page: () => ConfirmationScreen(),
+        ),
+      ],
+    );
   }
 }

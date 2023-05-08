@@ -21,7 +21,7 @@ class CustomDateField extends StatefulWidget {
 }
 
 class _CustomDateFieldState extends State<CustomDateField> {
-  DateTime? pickedDate;
+  DateTime pickedDate = DateTime.now();
   final inputFormat = DateFormat('yyyy-MM-dd');
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class _CustomDateFieldState extends State<CustomDateField> {
         TextFormField(
           controller: widget.textEditingController,
           validator: (value) => (value == null || value.isEmpty) &&
-                  (inputFormat.format(pickedDate!) != value)
+                  (inputFormat.format(pickedDate) != value)
               ? "${widget.validatorText}"
               : null,
           decoration: InputDecoration(
@@ -52,11 +52,11 @@ class _CustomDateFieldState extends State<CustomDateField> {
             ),
           ),
           onTap: () async {
-            pickedDate = await showDatePicker(
+            pickedDate = (await showDatePicker(
                 context: context,
                 initialDate: DateTime.now(),
                 firstDate: DateTime(1900),
-                lastDate: DateTime(2120));
+                lastDate: DateTime(2120)))!;
             if (pickedDate != null) {
               setState(() {
                 widget.textEditingController.text =
