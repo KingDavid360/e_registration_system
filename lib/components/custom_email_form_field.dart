@@ -1,18 +1,19 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomEmailForm extends StatelessWidget {
   final String? hint;
   final TextEditingController? textEditingController;
   final TextInputType? keyboardTpe;
   final String? validatorText;
 
-  const CustomTextFormField({
-    Key? key,
-    this.hint,
-    this.keyboardTpe,
-    this.textEditingController,
-    this.validatorText,
-  }) : super(key: key);
+  const CustomEmailForm(
+      {Key? key,
+      this.hint,
+      this.textEditingController,
+      this.keyboardTpe,
+      this.validatorText})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +31,8 @@ class CustomTextFormField extends StatelessWidget {
         TextFormField(
           keyboardType: keyboardTpe,
           controller: textEditingController,
-          validator: (validator) => validator == null || validator.isEmpty
-              ? 'Enter a valid ${validatorText}'
+          validator: (email) => email != null && !EmailValidator.validate(email)
+              ? 'Enter a valid email'
               : null,
           decoration: InputDecoration(
             hintText: hint,

@@ -2,6 +2,7 @@ import 'package:csc_picker/csc_picker.dart';
 import 'package:e_registration_system/components/custom_button.dart';
 import 'package:e_registration_system/components/custom_course_value.dart';
 import 'package:e_registration_system/components/custom_date_field.dart';
+import 'package:e_registration_system/components/custom_email_form_field.dart';
 import 'package:e_registration_system/components/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,9 +27,10 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
   TextEditingController gradeLevelController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
+  TextEditingController birthdayController = TextEditingController();
 
   late String selectedGender;
+  String countryError = "";
 
   late String selectedCountry;
   late String selectedState;
@@ -42,6 +44,7 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
   String course = " Flutter";
 
   bool validatorState = true;
+  bool countryValidatorState = true;
 
   final formKey = GlobalKey<FormState>();
 
@@ -149,7 +152,7 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                             Icons.calendar_today_outlined,
                             color: Colors.grey,
                           ),
-                          textEditingController: dateController),
+                          textEditingController: birthdayController),
                       SizedBox(height: size.height * 0.02),
                       CustomTextFormField(
                           hint: "Institution",
@@ -170,6 +173,7 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                             color: Colors.grey),
                       ),
                       CSCPicker(
+                        flagState: CountryFlag.DISABLE,
                         defaultCountry: CscCountry.Nigeria,
                         onCountryChanged: (country) {
                           setState(() {
@@ -192,9 +196,7 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                         },
                       ),
                       Text(
-                        validatorState == true
-                            ? ""
-                            : "Enter a valid country, state and city",
+                        countryValidatorState == true ? "" : countryError,
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
@@ -211,7 +213,7 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                           validatorText: "Grade level",
                           textEditingController: gradeLevelController),
                       SizedBox(height: size.height * 0.02),
-                      CustomTextFormField(
+                      CustomEmailForm(
                           hint: "Email",
                           validatorText: "Email",
                           textEditingController: emailController),
@@ -241,7 +243,8 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                                 (selectedCountry.isNotEmpty &&
                                     selectedState.isNotEmpty &&
                                     selectedCity.isNotEmpty &&
-                                    selectedGender.isNotEmpty)) {
+                                    selectedGender.isNotEmpty) &&
+                                (selectedCountry.trim() == "Nigeria".trim())) {
                               Get.toNamed(
                                 '/confirmation',
                                 arguments: [
@@ -251,28 +254,42 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                                   {"lastName": lastNameController.text},
                                   {"otherName": otherNamesController.text},
                                   {"gender": selectedGender},
-                                  {"date": dateController.text},
+                                  {
+                                    "birthday": birthdayController.text
+                                        .replaceAll(' ', '')
+                                  },
                                   {"country": selectedCountry},
                                   {"state": selectedState},
                                   {"city": selectedCity},
                                   {"address": addressController.text},
+                                  {"email": emailController.text},
+                                  {"institution": institutionController.text},
+                                  {
+                                    "typeOfInstitution":
+                                        typeOfInstitutionController.text
+                                  },
                                   {"gradeLevel": gradeLevelController.text},
                                   {"phoneNumber": phoneNumberController.text},
                                   {"course": course},
                                 ],
                               );
                             } else {
+                              if (selectedCountry != "Nigeria") {
+                                setState(() {
+                                  countryError = "Only available in Nigeria";
+                                });
+                              }
                               setState(() {
                                 validatorState = false;
-                                print(validatorState);
-                                print(selectedCountry);
-                                print(selectedState);
-                                print(selectedCity);
-                                print(selectedGender);
+                                countryValidatorState = false;
                               });
                             }
                           },
-                          child: CustomButton(text: "Next"))
+                          child: CustomButton(
+                            text: "Next",
+                            color: Colors.black,
+                            textColor: Colors.white,
+                          ))
                     ],
                   )),
             )

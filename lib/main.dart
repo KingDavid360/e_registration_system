@@ -1,5 +1,6 @@
 import 'package:e_registration_system/screens/home.dart';
 import 'package:e_registration_system/screens/mobile/confirmation_screen.dart';
+import 'package:e_registration_system/screens/mobile/successful_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +30,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/confirmation',
           page: () => ConfirmationScreen(),
+        ),
+        GetPage(
+          name: '/successful',
+          page: () => SuccessfulScreen(),
         ),
       ],
     );

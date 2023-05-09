@@ -21,19 +21,16 @@ class CustomTextFieldDisplay extends StatelessWidget {
               fontWeight: FontWeight.w600),
         ),
         SizedBox(width: size.width * 0.02),
-        Container(
-          width: size.height * 0.3,
-          decoration:
-              BoxDecoration(border: Border.all(width: 2.0, color: Colors.grey)),
+        Flexible(
           child: Padding(
             padding: EdgeInsets.symmetric(
-                vertical: 10.0, horizontal: size.width * 0.01),
+                vertical: 10.0, horizontal: size.width * 0.02),
             child: Text(
               text,
               textAlign: TextAlign.left,
               style: TextStyle(
-                  fontSize: size.height * 0.025,
-                  color: Colors.black,
+                  fontSize: size.height * 0.028,
+                  color: Colors.grey[600],
                   fontWeight: FontWeight.w500),
             ),
           ),
