@@ -45,9 +45,18 @@ class _CustomDateFieldState extends State<CustomDateField> {
           decoration: InputDecoration(
             icon: widget.icon,
             labelText: widget.hint,
-            border: const OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
+              // borderRadius: BorderRadius.circular(25.0),
               borderSide: BorderSide(
-                color: Color(0xff94F6B9),
+                color: Colors.blueAccent,
+                width: 3.0,
+              ),
+            ),
+            enabledBorder: const OutlineInputBorder(
+              // borderRadius: BorderRadius.circular(25.0),
+              borderSide: BorderSide(
+                color: Color(0xff034D29),
+                width: 3.0,
               ),
             ),
           ),

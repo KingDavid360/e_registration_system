@@ -16,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -27,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
               fontWeight: FontWeight.w400,
               color: Colors.grey),
         ),
+        SizedBox(height: size.height * 0.01),
         TextFormField(
           keyboardType: keyboardTpe,
           controller: textEditingController,
@@ -34,19 +36,24 @@ class CustomTextFormField extends StatelessWidget {
               ? 'Enter a valid ${validatorText}'
               : null,
           decoration: InputDecoration(
-            hintText: hint,
+            labelText: hint,
+            labelStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff034D29)),
             fillColor: Colors.white,
             focusedBorder: const OutlineInputBorder(
               // borderRadius: BorderRadius.circular(25.0),
               borderSide: BorderSide(
                 color: Colors.blueAccent,
+                width: 3.0,
               ),
             ),
             enabledBorder: const OutlineInputBorder(
               // borderRadius: BorderRadius.circular(25.0),
               borderSide: BorderSide(
-                color: Colors.grey,
-                width: 2.0,
+                color: Color(0xff034D29),
+                width: 3.0,
               ),
             ),
           ),

@@ -59,182 +59,196 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ListView(
+      body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: InkWell(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Container(
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.black,
-                            size: 30,
-                          ),
-                          Text(
-                            'Back',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 20,
+          Opacity(
+            opacity: 0.3,
+            child: Center(
+                child: Image.asset(
+                    height: size.height * 0.3,
+                    width: size.width * 0.9,
+                    "images/coat_of_arm.png")),
+          ),
+          ListView(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.arrow_back_ios,
                                 color: Colors.black,
-                                fontWeight: FontWeight.bold),
+                                size: 30,
+                              ),
+                              Text(
+                                'Back',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.02),
-                const Text(
-                  'Check your details correctly',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Staff id:",
-                  text: staffId,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "NIN:",
-                  text: NIN,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "First name:",
-                  text: firstName,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Last name:",
-                  text: lastName,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Other name:",
-                  text: otherName,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Gender:",
-                  text: gender,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(label: "Birthday:", text: birthday),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Country:",
-                  text: country,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "State:",
-                  text: state,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "City:",
-                  text: city,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Address:",
-                  text: address,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Email:",
-                  text: email,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Institution:",
-                  text: institution,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Type of institution:",
-                  text: typeOfInstitution,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Grade level:",
-                  text: gradeLevel,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Phone number:",
-                  text: phoneNumber,
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomTextFieldDisplay(
-                  label: "Course:",
-                  text: course,
-                ),
-                SizedBox(height: size.height * 0.03),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Flexible(
-                        child: InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: const CustomButton(
-                        text: "Edit",
-                        color: Colors.grey,
-                        textColor: Colors.white,
-                      ),
-                    )),
-                    SizedBox(width: size.width * 0.02),
-                    Flexible(
-                        child: InkWell(
-                      onTap: () async {
-                        bool created = await clientController.registerClient(
-                          staffId: staffId,
-                          nin: NIN,
-                          firstName: firstName,
-                          lastName: lastName,
-                          middleName: otherName,
-                          gender: gender,
-                          birthday: birthday,
-                          state: state,
-                          city: city,
-                          address: address,
-                          email: email,
-                          institution: institution,
-                          typeOfInstitution: typeOfInstitution,
-                          gradeLevel: gradeLevel,
-                          phoneNumber: phoneNumber,
-                          course: course,
-                        );
-                        if (created) {
-                          Get.toNamed("/successful");
-                        }
-                      },
-                      child: const CustomButton(
-                          text: "Submit",
+                    SizedBox(height: size.height * 0.02),
+                    const Text(
+                      'Check your details correctly',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 30,
                           color: Colors.black,
-                          textColor: Colors.white),
-                    ))
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Staff id:",
+                      text: staffId,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "NIN:",
+                      text: NIN,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "First name:",
+                      text: firstName,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Last name:",
+                      text: lastName,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Other name:",
+                      text: otherName,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Gender:",
+                      text: gender,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(label: "Birthday:", text: birthday),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Country:",
+                      text: country,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "State:",
+                      text: state,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "City:",
+                      text: city,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Address:",
+                      text: address,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Email:",
+                      text: email,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Institution:",
+                      text: institution,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Type of institution:",
+                      text: typeOfInstitution,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Grade level:",
+                      text: gradeLevel,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Phone number:",
+                      text: phoneNumber,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomTextFieldDisplay(
+                      label: "Course:",
+                      text: course,
+                    ),
+                    SizedBox(height: size.height * 0.03),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Flexible(
+                            child: InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: const CustomButton(
+                            text: "Edit",
+                            color: Colors.grey,
+                            textColor: Colors.white,
+                          ),
+                        )),
+                        SizedBox(width: size.width * 0.02),
+                        Flexible(
+                            child: InkWell(
+                          onTap: () async {
+                            bool created =
+                                await clientController.registerClient(
+                              staffId: staffId,
+                              nin: NIN,
+                              firstName: firstName,
+                              lastName: lastName,
+                              middleName: otherName,
+                              gender: gender,
+                              birthday: birthday,
+                              state: state,
+                              city: city,
+                              address: address,
+                              email: email,
+                              institution: institution,
+                              typeOfInstitution: typeOfInstitution,
+                              gradeLevel: gradeLevel,
+                              phoneNumber: phoneNumber,
+                              course: course,
+                            );
+                            if (created) {
+                              Get.toNamed("/successful");
+                            }
+                          },
+                          child: const CustomButton(
+                              text: "Submit",
+                              color: Colors.black,
+                              textColor: Colors.white),
+                        ))
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
-          )
+                ),
+              )
+            ],
+          ),
         ],
       ),
     );

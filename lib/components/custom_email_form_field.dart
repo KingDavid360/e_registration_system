@@ -41,13 +41,14 @@ class CustomEmailForm extends StatelessWidget {
               // borderRadius: BorderRadius.circular(25.0),
               borderSide: BorderSide(
                 color: Colors.blueAccent,
+                width: 3.0,
               ),
             ),
             enabledBorder: const OutlineInputBorder(
               // borderRadius: BorderRadius.circular(25.0),
               borderSide: BorderSide(
-                color: Colors.grey,
-                width: 2.0,
+                color: Color(0xff034D29),
+                width: 3.0,
               ),
             ),
           ),

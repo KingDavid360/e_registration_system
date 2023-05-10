@@ -16,9 +16,9 @@ class CustomTextFieldDisplay extends StatelessWidget {
           label,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: size.height * 0.03,
+              fontSize: size.height * 0.028,
               color: Colors.black,
-              fontWeight: FontWeight.w600),
+              fontWeight: FontWeight.bold),
         ),
         SizedBox(width: size.width * 0.02),
         Flexible(
@@ -29,9 +29,9 @@ class CustomTextFieldDisplay extends StatelessWidget {
               text,
               textAlign: TextAlign.left,
               style: TextStyle(
-                  fontSize: size.height * 0.028,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w500),
+                  fontSize: size.height * 0.025,
+                  color: Colors.grey[800],
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ),

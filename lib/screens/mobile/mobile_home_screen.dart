@@ -110,35 +110,47 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                                   color: Colors.grey),
                             ),
                             SizedBox(height: 10),
-                            DropdownButtonFormField<String>(
-                              onChanged: (value) {
-                                if (value != null) {
-                                  setState(() {
-                                    selectedGender = value;
-                                    print(selectedGender);
-                                  });
-                                }
-                              },
-                              items: const [
-                                DropdownMenuItem(
-                                  value: 'male',
-                                  child: Text('Male'),
+                            Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                color: Color(0xff034D29),
+                                width: 3.0,
+                              )),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DropdownButtonFormField<String>(
+                                  focusColor: Color(0xff034D29),
+                                  // dropdownColor: Color(0xff034D29),
+                                  onChanged: (value) {
+                                    if (value != null) {
+                                      setState(() {
+                                        selectedGender = value;
+                                        print(selectedGender);
+                                      });
+                                    }
+                                  },
+                                  items: const [
+                                    DropdownMenuItem(
+                                      value: 'male',
+                                      child: Text('Male'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'female',
+                                      child: Text('Female'),
+                                    ),
+                                  ],
+                                  decoration: const InputDecoration(
+                                    labelText: 'Select your gender',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return 'Please select a valid gender';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                DropdownMenuItem(
-                                  value: 'female',
-                                  child: Text('Female'),
-                                ),
-                              ],
-                              decoration: const InputDecoration(
-                                labelText: 'Select your gender',
-                                border: OutlineInputBorder(),
                               ),
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Please select a valid gender';
-                                }
-                                return null;
-                              },
                             ),
                           ],
                         ),

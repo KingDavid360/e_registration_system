@@ -12,7 +12,7 @@ class CustomCourseField extends StatelessWidget {
       width: size.height * 0.9,
       decoration: BoxDecoration(
         color: Colors.grey[300],
-        border: Border.all(color: Colors.grey),
+        border: Border.all(color: Color(0xff034D29), width: 3),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
