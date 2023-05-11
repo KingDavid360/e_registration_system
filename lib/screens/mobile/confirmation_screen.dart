@@ -235,7 +235,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                             );
                             if (created) {
                               Get.toNamed("/successful");
-                            }
+                            } else {}
                           },
                           child: const CustomButton(
                               text: "Submit",

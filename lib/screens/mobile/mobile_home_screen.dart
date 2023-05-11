@@ -61,6 +61,14 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                 height: size.height * 0.15,
                 width: size.width * 075,
                 "images/coat_of_arm.png"),
+            const Text(
+              'Fill in your details correctly',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Form(
@@ -184,28 +192,38 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                             fontWeight: FontWeight.w400,
                             color: Colors.grey),
                       ),
-                      CSCPicker(
-                        flagState: CountryFlag.DISABLE,
-                        defaultCountry: CscCountry.Nigeria,
-                        onCountryChanged: (country) {
-                          setState(() {
-                            selectedCountry = country;
-                          });
-                        },
-                        onStateChanged: (state) {
-                          if (state != null) {
-                            setState(() {
-                              selectedState = state!;
-                            });
-                          }
-                        },
-                        onCityChanged: (city) {
-                          if (city != null) {
-                            setState(() {
-                              selectedCity = city!;
-                            });
-                          }
-                        },
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                          color: Color(0xff034D29),
+                          width: 3.0,
+                        )),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CSCPicker(
+                            flagState: CountryFlag.DISABLE,
+                            defaultCountry: CscCountry.Nigeria,
+                            onCountryChanged: (country) {
+                              setState(() {
+                                selectedCountry = country;
+                              });
+                            },
+                            onStateChanged: (state) {
+                              if (state != null) {
+                                setState(() {
+                                  selectedState = state!;
+                                });
+                              }
+                            },
+                            onCityChanged: (city) {
+                              if (city != null) {
+                                setState(() {
+                                  selectedCity = city!;
+                                });
+                              }
+                            },
+                          ),
+                        ),
                       ),
                       Text(
                         countryValidatorState == true ? "" : countryError,
