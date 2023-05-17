@@ -35,7 +35,11 @@ class CustomEmailForm extends StatelessWidget {
               ? 'Enter a valid email'
               : null,
           decoration: InputDecoration(
-            hintText: hint,
+            labelText: hint,
+            labelStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff034D29)),
             fillColor: Colors.white,
             focusedBorder: const OutlineInputBorder(
               // borderRadius: BorderRadius.circular(25.0),

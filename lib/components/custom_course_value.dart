@@ -8,18 +8,27 @@ class CustomCourseField extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      height: size.height * 0.065,
-      width: size.height * 0.9,
+      height: size.height * 0.085,
+      width: size.width * 0.9,
       decoration: BoxDecoration(
         color: Colors.grey[300],
         border: Border.all(color: Color(0xff034D29), width: 3),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
-        child: Text(
-          "Course: ${course}",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            " Course: ",
+            style: TextStyle(
+                fontSize: size.height * 0.025, fontWeight: FontWeight.w600),
+          ),
+          Text(
+            course,
+            style: TextStyle(
+                fontSize: size.height * 0.025, fontWeight: FontWeight.w600),
+          ),
+        ],
       ),
     );
   }

@@ -10,15 +10,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: screenDetector.isDesktop(context)
-          ? DesktopHomeScreen()
-          : screenDetector.isMobile(context)
-              ? MobileHomeScreen()
-              : screenDetector.isTablet(context)
-                  ? TabletHomeScreen()
-                  : MobileHomeScreen(),
-    );
+    return Scaffold(backgroundColor: Colors.black, body: MobileHomeScreen());
   }
 }

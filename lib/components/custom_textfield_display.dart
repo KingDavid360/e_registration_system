@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:e_registration_system/screen_detector.dart';
 
 class CustomTextFieldDisplay extends StatelessWidget {
   final text;
@@ -10,27 +11,32 @@ class CustomTextFieldDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: screenDetector.isMobile(context)
+          ? MainAxisAlignment.start
+          : screenDetector.isTablet(context)
+              ? MainAxisAlignment.center
+              : screenDetector.isDesktop(context)
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.center,
       children: [
         Text(
           label,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: size.height * 0.028,
-              color: Colors.black,
+              fontSize: size.height * 0.03,
+              color: Color(0xff034D29),
               fontWeight: FontWeight.bold),
         ),
         SizedBox(width: size.width * 0.02),
         Flexible(
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: 10.0, horizontal: size.width * 0.02),
+            padding: EdgeInsets.symmetric(vertical: size.height * 0.0095),
             child: Text(
-              text,
+              " ${text}",
               textAlign: TextAlign.left,
               style: TextStyle(
                   fontSize: size.height * 0.025,
-                  color: Colors.grey[800],
+                  color: Colors.black,
                   fontWeight: FontWeight.bold),
             ),
           ),

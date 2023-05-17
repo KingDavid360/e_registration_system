@@ -5,4 +5,5 @@ class ApiRoute {
   static const base = "$local/client";
 
   static const register = "$base/register-client/";
+  static const fetchCourse = "$base/fetch-course/";
 }

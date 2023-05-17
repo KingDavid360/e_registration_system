@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:e_registration_system/api/model/RegistrationModel.dart';
+import 'package:e_registration_system/api/model/course_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as getx;
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-
 import '../api_helpers.dart';
 import '../api_routes.dart';
 
@@ -15,9 +15,9 @@ class ClientController extends GetxController {
   Map<String, String> get header => {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        //'Authorization': 'Bearer ${locator<UserInfoCache>().token}',
+        // 'Authorization': 'Bearer ${locator<UserInfoCache>().token}',
       };
-
+  CourseModel courseModel = CourseModel();
   RegistrationModel registrationModel = RegistrationModel();
   Future<bool> registerClient({
     String? staffId,
@@ -80,5 +80,19 @@ class ClientController extends GetxController {
         backgroundColor: Colors.black,
       ),
     );
+  }
+
+  Future<String> fetchCourse() async {
+    try {
+      var responsebody = await Api().get(ApiRoute.fetchCourse, header);
+      courseModel = courseModelFromJson(responsebody);
+      // ApiResponse response = ApiResponse.fromJson(responsebody);
+      print(courseModel.data![0].course.toString());
+      return courseModel.data![0].course.toString();
+    } catch (e) {
+      displayError(title: "Error", message: e.toString());
+      print(e);
+      return "";
+    }
   }
 }

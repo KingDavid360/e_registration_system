@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:e_registration_system/api/response_handler.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart' as getx;
 import 'package:e_registration_system/api/api_exceptions.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
@@ -42,5 +39,24 @@ class Api {
         print(e);
       }
     }
+  }
+
+  Future get(String url, header, {hideLog = false}) async {
+    var responseJson;
+
+    try {
+      http.Response res;
+      if (header != null) {
+        res = await client.get(Uri.parse(url), headers: header);
+      } else {
+        res = await client.get(Uri.parse(url));
+      }
+      responseJson = responseHandler(res, hideLog: hideLog);
+    } on SocketException {
+      //network error
+      throw NetworkException("Network error occurred");
+    }
+
+    return responseJson;
   }
 }

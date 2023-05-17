@@ -1,4 +1,5 @@
 import 'package:csc_picker/csc_picker.dart';
+import 'package:e_registration_system/api/repositories/client_repository.dart';
 import 'package:e_registration_system/components/custom_button.dart';
 import 'package:e_registration_system/components/custom_course_value.dart';
 import 'package:e_registration_system/components/custom_date_field.dart';
@@ -7,6 +8,9 @@ import 'package:e_registration_system/components/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:e_registration_system/screen_detector.dart';
+
+import '../../api/model/course_model.dart';
 
 class MobileHomeScreen extends StatefulWidget {
   MobileHomeScreen({Key? key}) : super(key: key);
@@ -16,6 +20,16 @@ class MobileHomeScreen extends StatefulWidget {
 }
 
 class _MobileHomeScreenState extends State<MobileHomeScreen> {
+  final clientController = Get.put(ClientController());
+  String course = "";
+  @override
+  void initState() {
+    super.initState();
+    clientController.fetchCourse().then((value) => course = value);
+  }
+
+  Datum data = Datum();
+
   TextEditingController staffIdController = TextEditingController();
   TextEditingController NINController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
@@ -32,16 +46,14 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
   late String selectedGender;
   String countryError = "";
 
-  late String selectedCountry;
-  late String selectedState;
-  late String selectedCity;
+  String selectedCountry = "";
+  String selectedState = "";
+  String selectedCity = '';
 
   String genderValue = "";
 
   bool stateState = false;
   bool cityState = false;
-
-  String course = " Flutter";
 
   bool validatorState = true;
   bool countryValidatorState = true;
@@ -54,13 +66,35 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+        padding: EdgeInsets.symmetric(
+            horizontal: screenDetector.isMobile(context)
+                ? size.width * 0.03
+                : screenDetector.isTablet(context)
+                    ? size.width * 0.2
+                    : screenDetector.isDesktop(context)
+                        ? size.width * 0.2
+                        : size.width * 0.2,
+            vertical: 10),
         child: ListView(
           children: [
-            Image.asset(
-                height: size.height * 0.15,
-                width: size.width * 075,
-                "images/coat_of_arm.png"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Image.asset(
+                      height: size.height * 0.15,
+                      width: size.width * 0.5,
+                      "images/egtc_logo.png"),
+                ),
+                Flexible(
+                  child: Image.asset(
+                      height: size.height * 0.15,
+                      width: size.width * 0.375,
+                      "images/coat_of_arm.png"),
+                ),
+              ],
+            ),
+            SizedBox(height: size.height * 0.03),
             const Text(
               'Fill in your details correctly',
               textAlign: TextAlign.center,
@@ -70,7 +104,9 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                   fontWeight: FontWeight.bold),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.08,
+              ),
               child: Form(
                   key: formKey,
                   child: Column(
@@ -127,7 +163,7 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: DropdownButtonFormField<String>(
-                                  focusColor: Color(0xff034D29),
+                                  // focusColor: Color(0xff034D29),
                                   // dropdownColor: Color(0xff034D29),
                                   onChanged: (value) {
                                     if (value != null) {
@@ -170,7 +206,7 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                               "Enter a birthday in YYYY-MM-DD format",
                           icon: const Icon(
                             Icons.calendar_today_outlined,
-                            color: Colors.grey,
+                            color: Color(0xff034D29),
                           ),
                           textEditingController: birthdayController),
                       SizedBox(height: size.height * 0.02),
@@ -226,9 +262,11 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                         ),
                       ),
                       Text(
-                        countryValidatorState == true ? "" : countryError,
+                        countryValidatorState == true
+                            ? ""
+                            : "Fill in correctly (only available in Nigeria)",
                         style: TextStyle(
-                            fontSize: 12,
+                            fontSize: size.height * 0.0165,
                             fontWeight: FontWeight.w400,
                             color: Colors.red),
                       ),
@@ -255,24 +293,16 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                       SizedBox(height: size.height * 0.02),
                       CustomCourseField(course: course),
                       SizedBox(height: size.height * 0.03),
-                      Text(
-                        validatorState == true
-                            ? ""
-                            : "Could you please fill every field correctly",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: validatorState == true
-                                ? Colors.white
-                                : Colors.red),
-                      ),
                       InkWell(
                           onTap: () {
                             print(validatorState);
                             if ((formKey.currentState!.validate()) &&
                                 (selectedCountry.isNotEmpty &&
-                                    selectedState.isNotEmpty &&
-                                    selectedCity.isNotEmpty &&
+                                    (selectedState.isNotEmpty &&
+                                        selectedState.trim() !=
+                                            "State".trim()) &&
+                                    (selectedCity.isNotEmpty &&
+                                        selectedCity.trim() != "City".trim()) &&
                                     selectedGender.isNotEmpty) &&
                                 (selectedCountry.trim() == "Nigeria".trim())) {
                               Get.toNamed(
@@ -304,21 +334,41 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                                 ],
                               );
                             } else {
-                              if (selectedCountry != "Nigeria") {
+                              if ((selectedCountry.isEmpty) ||
+                                  (selectedState.isEmpty) ||
+                                  (selectedCity.isEmpty)) {
                                 setState(() {
-                                  countryError = "Only available in Nigeria";
+                                  countryValidatorState = false;
+                                  print("Country: $countryValidatorState");
+                                  print(selectedState);
                                 });
                               }
                               setState(() {
                                 validatorState = false;
-                                countryValidatorState = false;
                               });
                             }
                           },
-                          child: CustomButton(
-                            text: "Next",
-                            color: Colors.black,
-                            textColor: Colors.white,
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Text(
+                                  validatorState == true
+                                      ? ""
+                                      : "Could you please fill every field correctly",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: validatorState == true
+                                          ? Colors.white
+                                          : Colors.red),
+                                ),
+                                CustomButton(
+                                  text: "Next",
+                                  color: Colors.black,
+                                  textColor: Colors.white,
+                                ),
+                              ],
+                            ),
                           ))
                     ],
                   )),

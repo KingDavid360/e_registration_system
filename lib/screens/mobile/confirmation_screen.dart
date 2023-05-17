@@ -72,13 +72,15 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
           ListView(
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
+                padding: EdgeInsets.symmetric(
+                    vertical: size.height * 0.0095,
+                    horizontal: size.width * 0.05),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Align(
-                      alignment: AlignmentDirectional.centerStart,
+                      alignment: AlignmentDirectional.center,
                       child: InkWell(
                         onTap: () {
                           Get.back();
@@ -110,7 +112,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 30,
-                          color: Colors.black,
+                          color: Color(0xff034D29),
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: size.height * 0.02),
