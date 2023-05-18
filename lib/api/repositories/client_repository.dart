@@ -82,17 +82,29 @@ class ClientController extends GetxController {
     );
   }
 
-  Future<String> fetchCourse() async {
+  Future<bool> fetchCourse() async {
     try {
       var responsebody = await Api().get(ApiRoute.fetchCourse, header);
       courseModel = courseModelFromJson(responsebody);
+      sortCourses();
       // ApiResponse response = ApiResponse.fromJson(responsebody);
-      print(courseModel.data![0].course.toString());
-      return courseModel.data![0].course.toString();
+      // print(courseModel.courses);
+      return true;
     } catch (e) {
       displayError(title: "Error", message: e.toString());
       print(e);
-      return "";
+      return true;
+    }
+  }
+
+  List<String> courses = [];
+
+  sortCourses() {
+    // this will clear the list to prevent multiple occurrence of courses
+    courses.clear();
+    // this will get each course and add it to the courses list i declared above
+    for (var i = 0; i < courseModel.data!.length; i++) {
+      courses.insert(0, courseModel.data!.elementAt(i).course!);
     }
   }
 }
